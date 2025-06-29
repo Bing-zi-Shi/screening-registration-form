@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>居民筛查登记表</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Microsoft YaHei', Arial, sans-serif;
+            background: #f5f7fa;
+            padding: 2rem;
+            color: #333;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-align: center;
+            padding: 2rem;
+        }
+        
+        .header h1 {
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .header p {
+            opacity: 0.9;
+            font-size: 1rem;
+        }
+        
+        .form-content {
+            padding: 2rem;
+        }
+        
+        .form-section {
+            margin-bottom: 2rem;
+            border: 1px solid #e9ecef;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        
+        .section-header {
+            background: #f8f9fa;
+            padding: 1rem 1.5rem;
+            border-bottom: 1px solid #e9ecef;
+            font-weight: bold;
+            color: #2c3e50;
+            font-size: 1.1rem;
+        }
+        
+        .form-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        .form-table td {
+            border: 1px solid #e9ecef;
+            padding: 0.8rem;
+            vertical-align: middle;
+        }
+        
+        .form-table .label {
+            background: #f8f9fa;
+            font-weight: bold;
+            color: #2c3e50;
+            width: 120px;
+            text-align: right;
+        }
+        
+        .form-table .input {
+            background: white;
+            min-height: 30px;
+        }
+        
+        .form-table .wide {
+            width: 200px;
+        }
+        
+        .checkbox-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+        
+        .notes-section {
+            background: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 8px;
+            padding: 1rem;
+            margin-top: 1rem;
+        }
+        
+        .notes-title {
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 0.5rem;
+        }
+        
+        .notes-content {
+            min-height: 80px;
+            border: 1px solid #dee2e6;
+            background: white;
+            border-radius: 4px;
+            padding: 0.5rem;
+        }
+        
+        .signature-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-top: 2rem;
+            padding: 1rem;
+            border-top: 2px solid #e9ecef;
+        }
+        
+        .signature-item {
+            text-align: center;
+        }
+        
+        .signature-line {
+            border-bottom: 1px solid #666;
+            height: 40px;
+            margin: 0.5rem 0;
+        }
+        
+        .download-section {
+            background: #e8f5e8;
+            padding: 1.5rem;
+            text-align: center;
+            border-top: 1px solid #e9ecef;
+        }
+        
+        .download-btn {
+            background: linear-gradient(135deg, #00b894, #55a3ff);
+            color: white;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 25px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 0 0.5rem;
+        }
+        
+        .download-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        
+        @media print {
+            body { background: white; padding: 0; }
+            .download-section { display: none; }
+            .container { box-shadow: none; }
+        }
+        
+        @media (max-width: 768px) {
+            .form-table .label {
+                width: 100px;
+                font-size: 0.9rem;
+            }
+            
+            .signature-section {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📋 居民筛查登记表</h1>
+            <p>结直肠癌筛查项目专用表格</p>
+        </div>
+        
+        <div class="form-content">
+            <!-- 基本信息 -->
+            <div class="form-section">
+                <div class="section-header">👤 基本信息</div>
+                <table class="form-table">
+                    <tr>
+                        <td class="label">姓名</td>
+                        <td class="input wide"></td>
+                        <td class="label">性别</td>
+                        <td class="input">
+                            <div class="checkbox-group">
+                                <div class="checkbox-item">
+                                    <input type="radio" name="gender" id="male">
+                                    <label for="male">男</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="radio" name="gender" id="female">
+                                    <label for="female">女</label>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="label">年龄</td>
+                        <td class="input wide"></td>
+                        <td class="label">联系电话</td>
+                        <td class="input wide"></td>
+                    </tr>
+                    <tr>
+                        <td class="label">身份证号</td>
+                        <td class="input" colspan="3"></td>
+                    </tr>
+                    <tr>
+                        <td class="label">家庭住址</td>
+                        <td class="input" colspan="3"></td>
+                    </tr>
+                </table>
+            </div>
+            
+            <!-- 风险评估 -->
+            <div class="form-section">
+                <div class="section-header">🎯 风险评估</div>
+                <table class="form-table">
+                    <tr>
+                        <td class="label">家族史</td>
+                        <td class="input" colspan="3">
+                            <div class="checkbox-group">
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="family-none">
+                                    <label for="family-none">无家族史</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="family-parent">
+                                    <label for="family-parent">父母有结直肠癌史</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="family-sibling">
+                                    <label for="family-sibling">兄弟姐妹有结直肠癌史</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="family-grandparent">
+                                    <label for="family-grandparent">祖父母/外祖父母有结直肠癌史</label>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="label">症状表现</td>
+                        <td class="input" colspan="3">
+                            <div class="checkbox-group">
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="symptom-none">
+                                    <label for="symptom-none">无症状</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="symptom-blood">
+                                    <label for="symptom-blood">便血</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="symptom-change">
+                                    <label for="symptom-change">排便习惯改变</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="symptom-pain">
+                                    <label for="symptom-pain">腹痛</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="symptom-weight">
+                                    <label for="symptom-weight">体重下降</label>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="label">生活习惯</td>
+                        <td class="input" colspan="3">
+                            <div class="checkbox-group">
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="habit-smoke">
+                                    <label for="habit-smoke">吸烟</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="habit-alcohol">
+                                    <label for="habit-alcohol">饮酒</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="habit-meat">
+                                    <label for="habit-meat">高红肉饮食</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="habit-exercise">
+                                    <label for="habit-exercise">缺乏运动</label>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="label">风险等级</td>
+                        <td class="input" colspan="3">
+                            <div class="checkbox-group">
+                                <div class="checkbox-item">
+                                    <input type="radio" name="risk" id="risk-low">
+                                    <label for="risk-low">🟢 低风险</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="radio" name="risk" id="risk-medium">
+                                    <label for="risk-medium">🟡 中风险</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="radio" name="risk" id="risk-high">
+                                    <label for="risk-high">🔴 高风险</label>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            
+            <!-- 筛查意愿 -->
+            <div class="form-section">
+                <div class="section-header">🤔 筛查意愿评估</div>
+                <table class="form-table">
+                    <tr>
+                        <td class="label">参与意愿</td>
+                        <td class="input" colspan="3">
+                            <div class="checkbox-group">
+                                <div class="checkbox-item">
+                                    <input type="radio" name="willingness" id="will-high">
+                                    <label for="will-high">😊 非常愿意</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="radio" name="willingness" id="will-medium">
+                                    <label for="will-medium">🤔 考虑考虑</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="radio" name="willingness" id="will-low">
+                                    <label for="will-low">😰 不太愿意</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="radio" name="willingness" id="will-refuse">
+                                    <label for="will-refuse">❌ 明确拒绝</label>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="label">主要顾虑</td>
+                        <td class="input" colspan="3">
+                            <div class="checkbox-group">
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="concern-cost">
+                                    <label for="concern-cost">💰 费用问题</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="concern-pain">
+                                    <label for="concern-pain">😣 担心疼痛</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="concern-time">
+                                    <label for="concern-time">⏰ 时间安排</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="concern-fear">
+                                    <label for="concern-fear">😨 心理恐惧</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="concern-other">
+                                    <label for="concern-other">❓ 其他原因</label>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            
+            <!-- 筛查安排 -->
+            <div class="form-section">
+                <div class="section-header">📅 筛查安排</div>
+                <table class="form-table">
+                    <tr>
+                        <td class="label">推荐方法</td>
+                        <td class="input" colspan="3">
+                            <div class="checkbox-group">
+                                <div class="checkbox-item">
+                                    <input type="radio" name="method" id="method-fit">
+                                    <label for="method-fit">🧪 FIT检测</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="radio" name="method" id="method-colonoscopy">
+                                    <label for="method-colonoscopy">🏥 结肠镜检查</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="radio" name="method" id="method-other">
+                                    <label for="method-other">🔬 其他检查</label>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="label">预约时间</td>
+                        <td class="input wide"></td>
+                        <td class="label">筛查机构</td>
+                        <td class="input wide"></td>
+                    </tr>
+                    <tr>
+                        <td class="label">联系医生</td>
+                        <td class="input wide"></td>
+                        <td class="label">联系电话</td>
+                        <td class="input wide"></td>
+                    </tr>
+                </table>
+            </div>
+            
+            <!-- 备注 -->
+            <div class="notes-section">
+                <div class="notes-title">📝 备注信息</div>
+                <div class="notes-content"></div>
+            </div>
+            
+            <!-- 签名 -->
+            <div class="signature-section">
+                <div class="signature-item">
+                    <div>居民签名：</div>
+                    <div class="signature-line"></div>
+                    <div>日期：____年____月____日</div>
+                </div>
+                <div class="signature-item">
+                    <div>工作人员签名：</div>
+                    <div class="signature-line"></div>
+                    <div>日期：____年____月____日</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="download-section">
+            <h3>📥 表格下载</h3>
+            <p style="margin: 1rem 0; color: #666;">点击下载可编辑的表格文件，方便打印和使用</p>
+            <button class="download-btn" onclick="downloadPDF()">📄 下载PDF版本</button>
+            <button class="download-btn" onclick="printForm()">🖨️ 直接打印</button>
+        </div>
+    </div>
+    
+    <script>
+        function downloadPDF() {
+            // 这里可以集成PDF生成功能
+            alert('PDF下载功能开发中，您可以先使用打印功能');
+        }
+        
+        function printForm() {
+            window.print();
+        }
+        
+        // 添加表单交互
+        document.addEventListener('DOMContentLoaded', function() {
+            // 家族史选择逻辑
+            const familyNone = document.getElementById('family-none');
+            const familyOthers = document.querySelectorAll('input[type="checkbox"][id^="family-"]:not(#family-none)');
+            
+            familyNone.addEventListener('change', function() {
+                if (this.checked) {
+                    familyOthers.forEach(cb => cb.checked = false);
+                }
+            });
+            
+            familyOthers.forEach(cb => {
+                cb.addEventListener('change', function() {
+                    if (this.checked) {
+                        familyNone.checked = false;
+                    }
+                });
+            });
+            
+            // 症状选择逻辑
+            const symptomNone = document.getElementById('symptom-none');
+            const symptomOthers = document.querySelectorAll('input[type="checkbox"][id^="symptom-"]:not(#symptom-none)');
+            
+            symptomNone.addEventListener('change', function() {
+                if (this.checked) {
+                    symptomOthers.forEach(cb => cb.checked = false);
+                }
+            });
+            
+            symptomOthers.forEach(cb => {
+                cb.addEventListener('change', function() {
+                    if (this.checked) {
+                        symptomNone.checked = false;
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
